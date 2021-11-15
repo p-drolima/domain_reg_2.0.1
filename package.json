@@ -1,0 +1,28 @@
+{
+    "name": "rest-express",
+    "version": "1.0.0",
+    "license": "MIT",
+    "scripts": {
+        "dev": "node index.js"
+    },
+    "dependencies": {
+        "@imed.ch/node-ifconfig.me": "^0.8.4",
+        "@prisma/client": "2.24.1",
+        "axios": "^0.21.1",
+        "ejs": "^3.1.6",
+        "express": "^4.17.1",
+        "file-system": "^1.2.2",
+        "forever-monitor": "^3.0.3",
+        "messagebird": "^3.6.2",
+        "postmark": "^2.7.8",
+        "request-to-curl": "^0.1.6",
+        "whoiser": "^1.12.0",
+        "xml2js": "^0.4.23"
+    },
+    "devDependencies": {
+        "prisma": "^2.24.1"
+    },
+    "engines": {
+        "node": ">=10.0.0"
+    }
+}
