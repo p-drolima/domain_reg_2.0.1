@@ -3,11 +3,9 @@ const { PrismaClient } = require('@prisma/client')
 const whoiser = require('whoiser')
 const os = require("os")
 const axios = require('axios');
+const tor_axios = require('tor-axios');
 const parseString = require('xml2js').parseString;
-//const forever = require('forever-monitor');
-const postmark = require("postmark");
 
-var email = new postmark.Client("f5d8c559-1498-49e9-a53f-f7fc98a716f7");
 
 const prisma = new PrismaClient()
 const app = express()
@@ -25,44 +23,101 @@ messagebird.balance.read(function (err, data) {
 
 app.use(express.json())
 
-function transEmail(msg, subject = currentServer + ' notification') {
+function semdRegister(domain) {
 
-    client.sendEmail({
-      "From": "charlie@reachnames.com",
-      "To": "pedro@pedrolima.me",
-      "Subject": subject,
-      "TextBody": msg
+    axios.post('http://127.0.0.1:3000', {domain: domain})
+    .then(function (data) {
+            // handle success
+        console.log('NC: ', data);
+    })
+    .catch(function (error) {
+        // handle error
+        console.log('Error NC Full: ', error);
+    })
+    .then(function () {
+        // always executed
     });
-  
+
 }
+
+function callGoogle(domain) {
+    
+    //axios.get(`https://pubapi-dot-domain-registry.appspot.com/whois/${domain}`)
+    axios.get(`https://pubapi-dot-domain-registry.appspot.com/whois/tarragona.app`)
+    .then(function (data) {
+            // handle success
+        console.log('Full: ', data.status);
+    })
+    .catch(function (error) {
+        // handle error - which is what we want if error is just a 404 status - asumption that 404 potential can mean domain is available to register
+        
+        error.response.status = '404'
+        ? semdRegister('tarragona.app') : false;
+
+        console.log('Error Full: ', error.response);
+    })
+    .then(function () {
+        // always executed
+    });
+
+}
+
+let messageSent = [];
+let clashDate = ''
+let currentServer = '';
 
 async function getDomains() {
 
-    const domains = await prisma.wp_posts.findMany({
+    const env_ip = process.env.IP;
+
+    let date = new Date();
+
+    let voidDate = date.getDate().toString() + date.getMonth().toString() + date.getFullYear().toString() + date.getHours().toString() + date.getMinutes().toString();
+
+    if(date.getMinutes() === 00 && voidDate !== clashDate ) {
+        clashDate = date.getDate().toString() + date.getMonth().toString() + date.getFullYear().toString() + date.getHours().toString() + date.getMinutes().toString();
+
+    }
+
+    const options = await prisma.wp_options.findMany({
         where: {
-          post_type: 'domains',
-          post_status: 'publish'
-        },
-        select: {
-          ID: true,
-          post_title: true,
-          wp_postmeta: {
-            where: {
-              OR: [
-                { meta_key: 'is_active' },
-                { meta_key: 'select_server' },
-                { meta_key: 'automatic_registration' },
-                { meta_key: 'price_range_1' },
-                { meta_key: 'price_range_2' },
-                { meta_key: 'current_status' },
-                { meta_key: 'reset_domain' }
-              ]
+            option_name: {
+                startsWith: 'options_',
             }
-          }
-        },
+        }
     });
 
-    console.log(domains);
+    const ipNumber = options.filter(n => n.option_name === 'options_ipv6_0_add_ipv6s').map((v) => {
+      let ip_count = v.option_value
+      return ip_count;
+    }).toString();
+
+    let domains = options.filter((option => option.option_name === 'options_ipv6_0_add_ipv6s_' + env_ip + '_add_domain_0_domain_name'));
+    let serverRate = options.filter((option => option.option_name === 'options_ipv6_0_add_ipv6s_' + env_ip + '_ipv6_request_time_period')).map((r) => {
+      return r.option_value;
+    });
+    let maxCost = options.filter((option => option.option_name === 'options_ipv6_0_add_ipv6s_' + env_ip + '_add_domain_0_max_cost'));
+
+    let autoRegister = '';
+    let getStatus = '';
+    
+    domains.forEach(function(obj,index,collection) {
+
+      const domainName = obj.option_value.toString();
+
+        setTimeout(function() {
+
+            (async () => {
+
+                callGoogle(domainName);
+                
+                getDomains();
+            
+            })();
+
+        }, parseInt(serverRate.toString()));
+
+    });
 
 }
 

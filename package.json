@@ -16,6 +16,7 @@
         "messagebird": "^3.6.2",
         "postmark": "^2.7.8",
         "request-to-curl": "^0.1.6",
+        "tor-axios": "^1.0.9",
         "whoiser": "^1.12.0",
         "xml2js": "^0.4.23"
     },
