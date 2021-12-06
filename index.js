@@ -42,8 +42,7 @@ function semdRegister(domain) {
 
 function callGoogle(domain) {
     
-    //axios.get(`https://pubapi-dot-domain-registry.appspot.com/whois/${domain}`)
-    axios.get(`https://pubapi-dot-domain-registry.appspot.com/whois/tarragona.app`)
+    axios.get(`https://pubapi-dot-domain-registry.appspot.com/whois/${domain}`)
     .then(function (data) {
             // handle success
         console.log('Full: ', data.status);
