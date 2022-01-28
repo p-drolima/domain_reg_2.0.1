@@ -16,7 +16,8 @@ const app = express()
 
 app.use(express.json())
 
-let domains, rdapEvents, rdapDomainStatus, lastRegistrar, lastRegistrationTime, clashDate, premiumDomain = 'false', registrationRes, beforeRegTime, status, namecheapData, lastGoogleTime = '', firstGoogleTime = '', EAPfee, tier;
+let domains, premiumPrice, rdapEvents, rdapDomainStatus, lastRegistrar, lastRegistrationTime, clashDate, premiumDomain = 'false',
+ registrationRes, beforeRegTime, status, namecheapData, lastGoogleTime = '', firstGoogleTime = '', tier;
 
 async function sendRegister(domain, cost, tier, ncIP, premiumPrice, registrationRes, firstGoogleTime, lastGoogleTime) {
   
@@ -26,7 +27,7 @@ async function sendRegister(domain, cost, tier, ncIP, premiumPrice, registration
 
     beforeRegTime = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " +  date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + ":" + date.getMilliseconds();;
 
-    await axios.get(`https://api.namecheap.com/xml.response?ApiUser=reachnames4&ApiKey=r0d665627eb0440cea0387ecb2c3e4a46&UserName=reachnames4&Command=namecheap.domains.create&ClientIp=${ncIP}&DomainName=${domain}&Years=1&AuxBillingFirstName=Charlie&AuxBillingLastName=Coe&AuxBillingAddress1=7%20The%20Close%20,%20Muswell%20Avenue&AuxBillingStateProvince=London&AuxBillingPostalCode=N102ED&AuxBillingCountry=UK&AuxBillingPhone=+44.2084447848&AuxBillingEmailAddress=charlie@reachnames.com&AuxBillingOrganizationName=Dot31&AuxBillingCity=London&TechFirstName=Charlie&TechLastName=Coe&TechAddress1=7%20The%20Close%20,%20Muswell%20Avenue&TechStateProvince=London&TechPostalCode=N102ED&TechCountry=UK&TechPhone=+44.2084447848&TechEmailAddress=charlie@reachnames.com&TechOrganizationName=Dot31&TechCity=London&AdminFirstName=Charlie&AdminLastName=Coe&AdminAddress1=7%20The%20Close%20,%20Muswell%20Avenue&AdminStateProvince=London&AdminPostalCode=N102ED&AdminCountry=UK&AdminPhone=+44.2084447848&AdminEmailAddress=charlie@reachnames.com&AdminOrganizationName=Dot31&AdminCity=London&RegistrantFirstName=Charlie&RegistrantLastName=Coe&RegistrantAddress1=7%20The%20Close%20,%20Muswell%20Avenue&RegistrantStateProvince=London&RegistrantPostalCode=N102ED&RegistrantCountry=UK&RegistrantPhone=+44.2084447848&RegistrantEmailAddress=charlie@reachnames.com&RegistrantOrganizationName=Dot31&RegistrantCity=London&AddFreeWhoisguard=yes&WGEnabled=no&GenerateAdminOrderRefId=False`)
+    await axios.get(`https://api.namecheap.com/xml.response?ApiUser=reachreserved2&ApiKey=046dee541118428aa24984519c11b359&UserName=reachreserved2&Command=namecheap.domains.create&ClientIp=${ncIP}&DomainName=${domain}&Years=1&AuxBillingFirstName=Charlie&AuxBillingLastName=Coe&AuxBillingAddress1=7%20The%20Close%20,%20Muswell%20Avenue&AuxBillingStateProvince=London&AuxBillingPostalCode=N102ED&AuxBillingCountry=UK&AuxBillingPhone=+44.2084447848&AuxBillingEmailAddress=charlie@reachnames.com&AuxBillingOrganizationName=Dot31&AuxBillingCity=London&TechFirstName=Charlie&TechLastName=Coe&TechAddress1=7%20The%20Close%20,%20Muswell%20Avenue&TechStateProvince=London&TechPostalCode=N102ED&TechCountry=UK&TechPhone=+44.2084447848&TechEmailAddress=charlie@reachnames.com&TechOrganizationName=Dot31&TechCity=London&AdminFirstName=Charlie&AdminLastName=Coe&AdminAddress1=7%20The%20Close%20,%20Muswell%20Avenue&AdminStateProvince=London&AdminPostalCode=N102ED&AdminCountry=UK&AdminPhone=+44.2084447848&AdminEmailAddress=charlie@reachnames.com&AdminOrganizationName=Dot31&AdminCity=London&RegistrantFirstName=Charlie&RegistrantLastName=Coe&RegistrantAddress1=7%20The%20Close%20,%20Muswell%20Avenue&RegistrantStateProvince=London&RegistrantPostalCode=N102ED&RegistrantCountry=UK&RegistrantPhone=+44.2084447848&RegistrantEmailAddress=charlie@reachnames.com&RegistrantOrganizationName=Dot31&RegistrantCity=London&AddFreeWhoisguard=yes&WGEnabled=no&GenerateAdminOrderRefId=False`)
     .then(response => {
 
         parseString(response.data, {mergeAttrs: true}, async function (err, result) {
@@ -107,7 +108,7 @@ async function sendRegister(domain, cost, tier, ncIP, premiumPrice, registration
 
         beforeRegTime = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " +  date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + ":" + date.getMilliseconds();;
 
-        await axios.get(`https://api.namecheap.com/xml.response?ApiUser=reachnames4&ApiKey=r0d665627eb0440cea0387ecb2c3e4a46&UserName=reachnames4&Command=namecheap.domains.create&ClientIp=${ncIP}&DomainName=${domain}&Years=1&AuxBillingFirstName=Charlie&AuxBillingLastName=Coe&AuxBillingAddress1=7%20The%20Close%20,%20Muswell%20Avenue&AuxBillingStateProvince=London&AuxBillingPostalCode=N102ED&AuxBillingCountry=UK&AuxBillingPhone=+44.2084447848&AuxBillingEmailAddress=charlie@reachnames.com&AuxBillingOrganizationName=Dot31&AuxBillingCity=London&TechFirstName=Charlie&TechLastName=Coe&TechAddress1=7%20The%20Close%20,%20Muswell%20Avenue&TechStateProvince=London&TechPostalCode=N102ED&TechCountry=UK&TechPhone=+44.2084447848&TechEmailAddress=charlie@reachnames.com&TechOrganizationName=Dot31&TechCity=London&AdminFirstName=Charlie&AdminLastName=Coe&AdminAddress1=7%20The%20Close%20,%20Muswell%20Avenue&AdminStateProvince=London&AdminPostalCode=N102ED&AdminCountry=UK&AdminPhone=+44.2084447848&AdminEmailAddress=charlie@reachnames.com&AdminOrganizationName=Dot31&AdminCity=London&RegistrantFirstName=Charlie&RegistrantLastName=Coe&RegistrantAddress1=7%20The%20Close%20,%20Muswell%20Avenue&RegistrantStateProvince=London&RegistrantPostalCode=N102ED&RegistrantCountry=UK&RegistrantPhone=+44.2084447848&RegistrantEmailAddress=charlie@reachnames.com&RegistrantOrganizationName=Dot31&RegistrantCity=London&AddFreeWhoisguard=yes&WGEnabled=no&GenerateAdminOrderRefId=False&IsPremiumDomain=True&PremiumPrice=${premiumPrice}&EapFee=0.0`)
+        await axios.get(`https://api.namecheap.com/xml.response?ApiUser=reachreserved2&ApiKey=046dee541118428aa24984519c11b359&UserName=reachreserved2&Command=namecheap.domains.create&ClientIp=${ncIP}&DomainName=${domain}&Years=1&AuxBillingFirstName=Charlie&AuxBillingLastName=Coe&AuxBillingAddress1=7%20The%20Close%20,%20Muswell%20Avenue&AuxBillingStateProvince=London&AuxBillingPostalCode=N102ED&AuxBillingCountry=UK&AuxBillingPhone=+44.2084447848&AuxBillingEmailAddress=charlie@reachnames.com&AuxBillingOrganizationName=Dot31&AuxBillingCity=London&TechFirstName=Charlie&TechLastName=Coe&TechAddress1=7%20The%20Close%20,%20Muswell%20Avenue&TechStateProvince=London&TechPostalCode=N102ED&TechCountry=UK&TechPhone=+44.2084447848&TechEmailAddress=charlie@reachnames.com&TechOrganizationName=Dot31&TechCity=London&AdminFirstName=Charlie&AdminLastName=Coe&AdminAddress1=7%20The%20Close%20,%20Muswell%20Avenue&AdminStateProvince=London&AdminPostalCode=N102ED&AdminCountry=UK&AdminPhone=+44.2084447848&AdminEmailAddress=charlie@reachnames.com&AdminOrganizationName=Dot31&AdminCity=London&RegistrantFirstName=Charlie&RegistrantLastName=Coe&RegistrantAddress1=7%20The%20Close%20,%20Muswell%20Avenue&RegistrantStateProvince=London&RegistrantPostalCode=N102ED&RegistrantCountry=UK&RegistrantPhone=+44.2084447848&RegistrantEmailAddress=charlie@reachnames.com&RegistrantOrganizationName=Dot31&RegistrantCity=London&AddFreeWhoisguard=yes&WGEnabled=no&GenerateAdminOrderRefId=False&IsPremiumDomain=True&PremiumPrice=${premiumPrice}&EapFee=0.0`)
         .then(response => {
 
           parseString(response.data, {mergeAttrs: true}, async function (err, result) {
@@ -207,7 +208,7 @@ async function callGoogle(domain, cost, ncIP) {
       firstNamecheap = true;
       // call namecheap availability
 
-      await axios.get(`https://api.namecheap.com/xml.response?ApiUser=reachnames4&ApiKey=r0d665627eb0440cea0387ecb2c3e4a46&UserName=reachnames4&Command=namecheap.domains.check&ClientIp=${ncIP}&DomainList=${domain}`)
+      await axios.get(`https://api.namecheap.com/xml.response?ApiUser=reachreserved2&ApiKey=046dee541118428aa24984519c11b359&UserName=reachreserved2&Command=namecheap.domains.check&ClientIp=${ncIP}&DomainList=${domain}`)
         .then( response => {
 
             // cache this in to json file for all 16 ips to access
@@ -226,15 +227,15 @@ async function callGoogle(domain, cost, ncIP) {
                       premiumPrice = parseFloat(result.ApiResponse.CommandResponse[0].DomainCheckResult[0].PremiumRegistrationPrice[0]).toFixed(2)
                       premiumPrice = premiumPrice.toString();
 
-                      namecheapData = { 
+                      let namecheapData = { 
                         
                         domain: domain,
                         price: premiumPrice,
 
                       };
                       
-                      namecheapData = JSON.stringify(namecheapData);
-                      fs.writeFileSync(`${domain}.json`, namecheapData);
+                      // namecheapData = JSON.stringify(namecheapData);
+                      // fs.writeFileSync(`${domain}.json`, namecheapData);
 
                     }
 
@@ -276,7 +277,7 @@ async function callGoogle(domain, cost, ncIP) {
             
             let firstGoogleTime = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " +  date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + ":" + date.getMilliseconds();
 
-            let rawdata = fs.readFileSync(`${domain}.json`);
+            let rawdata = namecheapData;
 
             premiumPrice = JSON.parse(rawdata).price;
             
